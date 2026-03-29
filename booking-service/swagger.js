@@ -53,12 +53,6 @@ const options = {
           type: "object",
           required: ["showId", "seats"],
           properties: {
-            userId: {
-              type: "string",
-              example: "660123abc123def456789078",
-              description:
-                "Optional. Ignored for normal users; admin can set this to create for another user.",
-            },
             showId: { type: "string", example: "660123abc123def456789099" },
             movieTitle: { type: "string", example: "Inception" },
             cinemaName: { type: "string", example: "Majestic Cineplex" },
