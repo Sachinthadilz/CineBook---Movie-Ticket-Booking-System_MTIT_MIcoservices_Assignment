@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Cinema = require("../models/Cinema");
 const Showtime = require("../models/Showtime");
 
+const isValidationError = (error) => error.name === "ValidationError";
+
+const sendServerError = (res, error) =>
+  res.status(500).json({ error: "Server error", details: error.message });
+
 const createShow = async (req, res) => {
   try {
     const {
@@ -25,7 +30,8 @@ const createShow = async (req, res) => {
       availableSeats === undefined
     ) {
       return res.status(400).json({
-        error: "movieId, cinemaId, hallName, showDate, showTime, ticketPrice, and availableSeats are required",
+        error:
+          "movieId, cinemaId, hallName, showDate, showTime, ticketPrice, and availableSeats are required",
       });
     }
 
@@ -52,15 +58,20 @@ const createShow = async (req, res) => {
     cinema.showtimes.push(show._id);
     await cinema.save();
 
-    const populatedShow = await Showtime.findById(show._id).populate("cinemaId", "cinemaName location");
+    const populatedShow = await Showtime.findById(show._id).populate(
+      "cinemaId",
+      "cinemaName location",
+    );
 
-    res.status(201).json({ message: "Showtime created successfully", show: populatedShow });
+    res
+      .status(201)
+      .json({ message: "Showtime created successfully", show: populatedShow });
   } catch (error) {
-    if (error.name === "ValidationError") {
+    if (isValidationError(error)) {
       return res.status(400).json({ error: error.message });
     }
 
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 
@@ -72,7 +83,7 @@ const getAllShows = async (req, res) => {
 
     res.status(200).json({ count: shows.length, shows });
   } catch (error) {
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 

@@ -19,9 +19,9 @@
                 "exec": [
                   "if (pm.response.code === 201) {",
                   "  const data = pm.response.json();",
-                  "  if (data.token) pm.environment.set('userToken', data.token);",
                   "  if (data.user && data.user._id) pm.environment.set('userId', data.user._id);",
                   "  if (data.user && data.user.email) pm.environment.set('userEmail', data.user.email);",
+                  "  console.log('Registration successful. Please login to get a token.');",
                   "}"
                 ]
               }
@@ -41,13 +41,8 @@
             },
             "url": {
               "raw": "{{userServiceUrl}}/users/register",
-              "host": [
-                "{{userServiceUrl}}"
-              ],
-              "path": [
-                "users",
-                "register"
-              ]
+              "host": ["{{userServiceUrl}}"],
+              "path": ["users", "register"]
             }
           }
         },
@@ -82,13 +77,8 @@
             },
             "url": {
               "raw": "{{userServiceUrl}}/users/login",
-              "host": [
-                "{{userServiceUrl}}"
-              ],
-              "path": [
-                "users",
-                "login"
-              ]
+              "host": ["{{userServiceUrl}}"],
+              "path": ["users", "login"]
             }
           }
         },
@@ -123,13 +113,8 @@
             },
             "url": {
               "raw": "{{userServiceUrl}}/users/login",
-              "host": [
-                "{{userServiceUrl}}"
-              ],
-              "path": [
-                "users",
-                "login"
-              ]
+              "host": ["{{userServiceUrl}}"],
+              "path": ["users", "login"]
             }
           }
         },
@@ -145,12 +130,8 @@
             ],
             "url": {
               "raw": "{{userServiceUrl}}/users",
-              "host": [
-                "{{userServiceUrl}}"
-              ],
-              "path": [
-                "users"
-              ]
+              "host": ["{{userServiceUrl}}"],
+              "path": ["users"]
             }
           }
         },
@@ -166,13 +147,8 @@
             ],
             "url": {
               "raw": "{{userServiceUrl}}/users/{{userId}}",
-              "host": [
-                "{{userServiceUrl}}"
-              ],
-              "path": [
-                "users",
-                "{{userId}}"
-              ]
+              "host": ["{{userServiceUrl}}"],
+              "path": ["users", "{{userId}}"]
             }
           }
         },
@@ -196,13 +172,8 @@
             },
             "url": {
               "raw": "{{userServiceUrl}}/users/{{userId}}",
-              "host": [
-                "{{userServiceUrl}}"
-              ],
-              "path": [
-                "users",
-                "{{userId}}"
-              ]
+              "host": ["{{userServiceUrl}}"],
+              "path": ["users", "{{userId}}"]
             }
           }
         }
@@ -245,12 +216,8 @@
             },
             "url": {
               "raw": "{{movieServiceUrl}}/movies",
-              "host": [
-                "{{movieServiceUrl}}"
-              ],
-              "path": [
-                "movies"
-              ]
+              "host": ["{{movieServiceUrl}}"],
+              "path": ["movies"]
             }
           }
         },
@@ -261,12 +228,8 @@
             "header": [],
             "url": {
               "raw": "{{movieServiceUrl}}/movies",
-              "host": [
-                "{{movieServiceUrl}}"
-              ],
-              "path": [
-                "movies"
-              ]
+              "host": ["{{movieServiceUrl}}"],
+              "path": ["movies"]
             }
           }
         },
@@ -277,13 +240,8 @@
             "header": [],
             "url": {
               "raw": "{{movieServiceUrl}}/movies/{{movieId}}",
-              "host": [
-                "{{movieServiceUrl}}"
-              ],
-              "path": [
-                "movies",
-                "{{movieId}}"
-              ]
+              "host": ["{{movieServiceUrl}}"],
+              "path": ["movies", "{{movieId}}"]
             }
           }
         },
@@ -299,13 +257,8 @@
             ],
             "url": {
               "raw": "{{movieServiceUrl}}/movies/{{movieId}}",
-              "host": [
-                "{{movieServiceUrl}}"
-              ],
-              "path": [
-                "movies",
-                "{{movieId}}"
-              ]
+              "host": ["{{movieServiceUrl}}"],
+              "path": ["movies", "{{movieId}}"]
             }
           }
         }
@@ -348,12 +301,8 @@
             },
             "url": {
               "raw": "{{cinemaServiceUrl}}/cinemas",
-              "host": [
-                "{{cinemaServiceUrl}}"
-              ],
-              "path": [
-                "cinemas"
-              ]
+              "host": ["{{cinemaServiceUrl}}"],
+              "path": ["cinemas"]
             }
           }
         },
@@ -364,12 +313,8 @@
             "header": [],
             "url": {
               "raw": "{{cinemaServiceUrl}}/cinemas",
-              "host": [
-                "{{cinemaServiceUrl}}"
-              ],
-              "path": [
-                "cinemas"
-              ]
+              "host": ["{{cinemaServiceUrl}}"],
+              "path": ["cinemas"]
             }
           }
         },
@@ -407,12 +352,8 @@
             },
             "url": {
               "raw": "{{cinemaServiceUrl}}/shows",
-              "host": [
-                "{{cinemaServiceUrl}}"
-              ],
-              "path": [
-                "shows"
-              ]
+              "host": ["{{cinemaServiceUrl}}"],
+              "path": ["shows"]
             }
           }
         },
@@ -423,12 +364,8 @@
             "header": [],
             "url": {
               "raw": "{{cinemaServiceUrl}}/shows",
-              "host": [
-                "{{cinemaServiceUrl}}"
-              ],
-              "path": [
-                "shows"
-              ]
+              "host": ["{{cinemaServiceUrl}}"],
+              "path": ["shows"]
             }
           }
         }
@@ -467,16 +404,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"showId\": \"{{showId}}\",\n  \"movieTitle\": \"Gehenu Lamai\",\n  \"cinemaName\": \"Liberty by Scope\",\n  \"showDate\": \"2026-05-10\",\n  \"showTime\": \"19:15\",\n  \"seats\": [\"B4\", \"B5\"],\n  \"totalAmount\": 3600\n}"
+              "raw": "{\n  \"showId\": \"{{showId}}\",\n  \"movieTitle\": \"Gehenu Lamai\",\n  \"cinemaName\": \"Liberty by Scope\",\n  \"showDate\": \"2026-05-10\",\n  \"showTime\": \"19:15\",\n  \"seats\": [\"B4\", \"B5\"],\n  \"totalAmount\": 3600\n}"
             },
             "url": {
               "raw": "{{bookingServiceUrl}}/bookings",
-              "host": [
-                "{{bookingServiceUrl}}"
-              ],
-              "path": [
-                "bookings"
-              ]
+              "host": ["{{bookingServiceUrl}}"],
+              "path": ["bookings"]
             }
           }
         },
@@ -492,12 +425,8 @@
             ],
             "url": {
               "raw": "{{bookingServiceUrl}}/bookings",
-              "host": [
-                "{{bookingServiceUrl}}"
-              ],
-              "path": [
-                "bookings"
-              ]
+              "host": ["{{bookingServiceUrl}}"],
+              "path": ["bookings"]
             }
           }
         },
@@ -513,13 +442,8 @@
             ],
             "url": {
               "raw": "{{bookingServiceUrl}}/bookings/{{bookingId}}",
-              "host": [
-                "{{bookingServiceUrl}}"
-              ],
-              "path": [
-                "bookings",
-                "{{bookingId}}"
-              ]
+              "host": ["{{bookingServiceUrl}}"],
+              "path": ["bookings", "{{bookingId}}"]
             }
           }
         }

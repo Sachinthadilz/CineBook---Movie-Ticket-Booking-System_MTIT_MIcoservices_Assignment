@@ -16,12 +16,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                ""
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": [""]
             }
           }
         },
@@ -34,9 +30,9 @@
                 "exec": [
                   "if (pm.response.code === 201) {",
                   "  const data = pm.response.json();",
-                  "  if (data.token) pm.environment.set('userToken', data.token);",
                   "  if (data.user && data.user._id) pm.environment.set('userId', data.user._id);",
                   "  if (data.user && data.user.email) pm.environment.set('userEmail', data.user.email);",
+                  "  console.log('Registration successful. Please login to get a token.');",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -57,13 +53,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/users/register",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users",
-                "register"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "register"]
             }
           }
         },
@@ -99,13 +90,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/users/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users",
-                "login"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "login"]
             }
           }
         },
@@ -140,13 +126,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/users/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users",
-                "login"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "login"]
             }
           }
         },
@@ -157,12 +138,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/movies",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "movies"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["movies"]
             }
           }
         },
@@ -173,12 +150,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/cinemas",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "cinemas"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["cinemas"]
             }
           }
         },
@@ -189,12 +162,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/shows",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "shows"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["shows"]
             }
           }
         }
@@ -215,13 +184,8 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/users/{{userId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users",
-                "{{userId}}"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
             }
           }
         },
@@ -245,13 +209,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/users/{{userId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users",
-                "{{userId}}"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
             }
           }
         },
@@ -285,16 +244,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"showId\": \"{{showId}}\",\n  \"movieTitle\": \"Gehenu Lamai\",\n  \"cinemaName\": \"Liberty by Scope\",\n  \"showDate\": \"2026-05-10\",\n  \"showTime\": \"19:15\",\n  \"seats\": [\"B4\", \"B5\"],\n  \"totalAmount\": 3600\n}"
+              "raw": "{\n  \"showId\": \"{{showId}}\",\n  \"movieTitle\": \"Gehenu Lamai\",\n  \"cinemaName\": \"Liberty by Scope\",\n  \"showDate\": \"2026-05-10\",\n  \"showTime\": \"19:15\",\n  \"seats\": [\"B4\", \"B5\"],\n  \"totalAmount\": 3600\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/bookings",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "bookings"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"]
             }
           }
         },
@@ -310,12 +265,8 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/bookings",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "bookings"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings"]
             }
           }
         },
@@ -331,13 +282,8 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/bookings/{{bookingId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "bookings",
-                "{{bookingId}}"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["bookings", "{{bookingId}}"]
             }
           }
         }
@@ -358,12 +304,8 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/users",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
             }
           }
         },
@@ -401,12 +343,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/movies",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "movies"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["movies"]
             }
           }
         },
@@ -417,13 +355,8 @@
             "header": [],
             "url": {
               "raw": "{{baseUrl}}/movies/{{movieId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "movies",
-                "{{movieId}}"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["movies", "{{movieId}}"]
             }
           }
         },
@@ -461,12 +394,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/cinemas",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "cinemas"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["cinemas"]
             }
           }
         },
@@ -504,12 +433,8 @@
             },
             "url": {
               "raw": "{{baseUrl}}/shows",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "shows"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["shows"]
             }
           }
         },
@@ -525,13 +450,8 @@
             ],
             "url": {
               "raw": "{{baseUrl}}/movies/{{movieId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "movies",
-                "{{movieId}}"
-              ]
+              "host": ["{{baseUrl}}"],
+              "path": ["movies", "{{movieId}}"]
             }
           }
         }

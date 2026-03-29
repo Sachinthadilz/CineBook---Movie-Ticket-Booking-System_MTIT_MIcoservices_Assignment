@@ -8,7 +8,8 @@ const options = {
     info: {
       title: "CineBook API Gateway",
       version: "1.0.0",
-      description: "API documentation for gateway routes and all proxied CineBook endpoints.",
+      description:
+        "API documentation for gateway routes and all proxied CineBook endpoints.",
     },
     servers: [
       {
@@ -28,7 +29,10 @@ const options = {
         GatewayStatus: {
           type: "object",
           properties: {
-            message: { type: "string", example: "CineBook API Gateway is running" },
+            message: {
+              type: "string",
+              example: "CineBook API Gateway is running",
+            },
             version: { type: "string", example: "1.0.0" },
             docs: { type: "string", example: "http://localhost:3000/api-docs" },
             routes: {
@@ -45,11 +49,26 @@ const options = {
             swaggerUrls: {
               type: "object",
               properties: {
-                gateway: { type: "string", example: "http://localhost:3000/api-docs" },
-                movie: { type: "string", example: "http://localhost:3001/api-docs" },
-                cinema: { type: "string", example: "http://localhost:3002/api-docs" },
-                booking: { type: "string", example: "http://localhost:3003/api-docs" },
-                user: { type: "string", example: "http://localhost:3004/api-docs" },
+                gateway: {
+                  type: "string",
+                  example: "http://localhost:3000/api-docs",
+                },
+                movie: {
+                  type: "string",
+                  example: "http://localhost:3001/api-docs",
+                },
+                cinema: {
+                  type: "string",
+                  example: "http://localhost:3002/api-docs",
+                },
+                booking: {
+                  type: "string",
+                  example: "http://localhost:3003/api-docs",
+                },
+                user: {
+                  type: "string",
+                  example: "http://localhost:3004/api-docs",
+                },
               },
             },
           },
@@ -61,14 +80,34 @@ const options = {
             title: { type: "string", example: "Gehenu Lamai" },
             genre: {
               type: "string",
-              enum: ["Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Animation", "Romance", "Thriller"],
+              enum: [
+                "Action",
+                "Comedy",
+                "Drama",
+                "Horror",
+                "Sci-Fi",
+                "Animation",
+                "Romance",
+                "Thriller",
+              ],
               example: "Drama",
             },
             duration: { type: "number", example: 110 },
-            description: { type: "string", example: "A restored Sri Lankan classic drama." },
+            description: {
+              type: "string",
+              example: "A restored Sri Lankan classic drama.",
+            },
             language: { type: "string", example: "Sinhala" },
-            rating: { type: "string", enum: ["G", "PG", "PG-13", "R", "U"], example: "PG" },
-            releaseDate: { type: "string", format: "date-time", example: "2026-05-01T00:00:00.000Z" },
+            rating: {
+              type: "string",
+              enum: ["G", "PG", "PG-13", "R", "U"],
+              example: "PG",
+            },
+            releaseDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-05-01T00:00:00.000Z",
+            },
             isActive: { type: "boolean", example: true },
             createdAt: { type: "string", format: "date-time" },
             updatedAt: { type: "string", format: "date-time" },
@@ -81,10 +120,17 @@ const options = {
             title: { type: "string", example: "Gehenu Lamai" },
             genre: { type: "string", example: "Drama" },
             duration: { type: "number", example: 110 },
-            description: { type: "string", example: "A restored Sri Lankan classic drama." },
+            description: {
+              type: "string",
+              example: "A restored Sri Lankan classic drama.",
+            },
             language: { type: "string", example: "Sinhala" },
             rating: { type: "string", example: "PG" },
-            releaseDate: { type: "string", format: "date-time", example: "2026-05-01T00:00:00.000Z" },
+            releaseDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-05-01T00:00:00.000Z",
+            },
           },
         },
         MovieListResponse: {
@@ -116,7 +162,11 @@ const options = {
           properties: {
             hallName: { type: "string", example: "Lotus Hall" },
             totalSeats: { type: "number", example: 180 },
-            seatType: { type: "string", enum: ["Standard", "VIP", "Recliner"], example: "Recliner" },
+            seatType: {
+              type: "string",
+              enum: ["Standard", "VIP", "Recliner"],
+              example: "Recliner",
+            },
           },
         },
         Cinema: {
@@ -184,7 +234,10 @@ const options = {
                 {
                   type: "object",
                   properties: {
-                    _id: { type: "string", example: "660123abc123def456789111" },
+                    _id: {
+                      type: "string",
+                      example: "660123abc123def456789111",
+                    },
                     cinemaName: { type: "string", example: "Liberty by Scope" },
                     location: { type: "string", example: "Colombo 03" },
                   },
@@ -202,7 +255,15 @@ const options = {
         },
         CreateShowtimeRequest: {
           type: "object",
-          required: ["movieId", "cinemaId", "hallName", "showDate", "showTime", "ticketPrice", "availableSeats"],
+          required: [
+            "movieId",
+            "cinemaId",
+            "hallName",
+            "showDate",
+            "showTime",
+            "ticketPrice",
+            "availableSeats",
+          ],
           properties: {
             movieId: { type: "string", example: "660123abc123def456789012" },
             movieTitle: { type: "string", example: "Gehenu Lamai" },
@@ -227,7 +288,10 @@ const options = {
         ShowtimeCreateResponse: {
           type: "object",
           properties: {
-            message: { type: "string", example: "Showtime created successfully" },
+            message: {
+              type: "string",
+              example: "Showtime created successfully",
+            },
             show: { $ref: "#/components/schemas/Showtime" },
           },
         },
@@ -246,16 +310,25 @@ const options = {
               items: { type: "string", example: "B4" },
             },
             totalAmount: { type: "number", example: 3600 },
-            status: { type: "string", enum: ["CONFIRMED", "CANCELLED"], example: "CONFIRMED" },
+            status: {
+              type: "string",
+              enum: ["CONFIRMED", "CANCELLED"],
+              example: "CONFIRMED",
+            },
             createdAt: { type: "string", format: "date-time" },
             updatedAt: { type: "string", format: "date-time" },
           },
         },
         CreateBookingRequest: {
           type: "object",
-          required: ["userId", "showId", "seats"],
+          required: ["showId", "seats"],
           properties: {
-            userId: { type: "string", example: "660123abc123def456789444" },
+            userId: {
+              type: "string",
+              example: "660123abc123def456789444",
+              description:
+                "Optional. Ignored for normal users; admin can set this to create for another user.",
+            },
             showId: { type: "string", example: "660123abc123def456789222" },
             movieTitle: { type: "string", example: "Gehenu Lamai" },
             cinemaName: { type: "string", example: "Liberty by Scope" },
@@ -288,7 +361,10 @@ const options = {
         BookingCancelResponse: {
           type: "object",
           properties: {
-            message: { type: "string", example: "Booking cancelled successfully" },
+            message: {
+              type: "string",
+              example: "Booking cancelled successfully",
+            },
             booking: { $ref: "#/components/schemas/Booking" },
           },
         },
@@ -346,8 +422,14 @@ const options = {
         UserResponse: {
           type: "object",
           properties: {
-            message: { type: "string", example: "User registered successfully" },
-            token: { type: "string", example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." },
+            message: {
+              type: "string",
+              example: "User registered successfully",
+            },
+            token: {
+              type: "string",
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            },
             user: { $ref: "#/components/schemas/User" },
           },
         },
@@ -355,14 +437,20 @@ const options = {
           type: "object",
           properties: {
             message: { type: "string", example: "Login successful" },
-            token: { type: "string", example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." },
+            token: {
+              type: "string",
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            },
             user: { $ref: "#/components/schemas/User" },
           },
         },
         UserUpdateResponse: {
           type: "object",
           properties: {
-            message: { type: "string", example: "User profile updated successfully" },
+            message: {
+              type: "string",
+              example: "User profile updated successfully",
+            },
             user: { $ref: "#/components/schemas/User" },
           },
         },

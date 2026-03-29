@@ -40,16 +40,25 @@ const options = {
               items: { type: "string", example: "A1" },
             },
             totalAmount: { type: "number", example: 5000 },
-            status: { type: "string", enum: ["CONFIRMED", "CANCELLED"], example: "CONFIRMED" },
+            status: {
+              type: "string",
+              enum: ["CONFIRMED", "CANCELLED"],
+              example: "CONFIRMED",
+            },
             createdAt: { type: "string", format: "date-time" },
             updatedAt: { type: "string", format: "date-time" },
           },
         },
         CreateBookingRequest: {
           type: "object",
-          required: ["userId", "showId", "seats"],
+          required: ["showId", "seats"],
           properties: {
-            userId: { type: "string", example: "660123abc123def456789078" },
+            userId: {
+              type: "string",
+              example: "660123abc123def456789078",
+              description:
+                "Optional. Ignored for normal users; admin can set this to create for another user.",
+            },
             showId: { type: "string", example: "660123abc123def456789099" },
             movieTitle: { type: "string", example: "Inception" },
             cinemaName: { type: "string", example: "Majestic Cineplex" },
@@ -83,7 +92,10 @@ const options = {
         BookingCancelResponse: {
           type: "object",
           properties: {
-            message: { type: "string", example: "Booking cancelled successfully" },
+            message: {
+              type: "string",
+              example: "Booking cancelled successfully",
+            },
             booking: { $ref: "#/components/schemas/Booking" },
           },
         },

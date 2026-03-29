@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const Booking = require("../models/Booking");
 
+const isValidationError = (error) => error.name === "ValidationError";
+
+const sendServerError = (res, error) =>
+  res.status(500).json({ error: "Server error", details: error.message });
+
 const createBooking = async (req, res) => {
   try {
     const {
@@ -14,16 +19,20 @@ const createBooking = async (req, res) => {
       totalAmount,
     } = req.body;
 
-    if (!userId || !showId || !Array.isArray(seats) || seats.length === 0) {
-      return res.status(400).json({ error: "userId, showId, and seats[] are required" });
+    if (!showId || !Array.isArray(seats) || seats.length === 0) {
+      return res.status(400).json({ error: "showId and seats[] are required" });
     }
 
-    if (req.user.id !== userId && req.user.role !== "admin") {
-      return res.status(403).json({ error: "You are not allowed to create a booking for another user." });
+    const effectiveUserId = userId || req.user.id;
+
+    if (effectiveUserId !== req.user.id && req.user.role !== "admin") {
+      return res.status(403).json({
+        error: "You are not allowed to create a booking for another user.",
+      });
     }
 
     const booking = await Booking.create({
-      userId,
+      userId: effectiveUserId,
       showId,
       movieTitle: movieTitle || "",
       cinemaName: cinemaName || "",
@@ -36,11 +45,11 @@ const createBooking = async (req, res) => {
 
     res.status(201).json({ message: "Booking confirmed", booking });
   } catch (error) {
-    if (error.name === "ValidationError") {
+    if (isValidationError(error)) {
       return res.status(400).json({ error: error.message });
     }
 
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 
@@ -49,7 +58,7 @@ const getAllBookings = async (req, res) => {
     const bookings = await Booking.find().sort({ createdAt: -1 });
     res.status(200).json({ count: bookings.length, bookings });
   } catch (error) {
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 
@@ -71,15 +80,19 @@ const cancelBooking = async (req, res) => {
     }
 
     if (booking.userId !== req.user.id && req.user.role !== "admin") {
-      return res.status(403).json({ error: "You are not allowed to cancel this booking." });
+      return res
+        .status(403)
+        .json({ error: "You are not allowed to cancel this booking." });
     }
 
     booking.status = "CANCELLED";
     await booking.save();
 
-    res.status(200).json({ message: "Booking cancelled successfully", booking });
+    res
+      .status(200)
+      .json({ message: "Booking cancelled successfully", booking });
   } catch (error) {
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 

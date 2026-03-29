@@ -8,13 +8,15 @@ const swaggerSpec = require("./swagger");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const movieServiceUrl = process.env.MOVIE_SERVICE_URL || "http://localhost:3001";
-const cinemaServiceUrl = process.env.CINEMA_SERVICE_URL || "http://localhost:3002";
-const bookingServiceUrl = process.env.BOOKING_SERVICE_URL || "http://localhost:3003";
+const movieServiceUrl =
+  process.env.MOVIE_SERVICE_URL || "http://localhost:3001";
+const cinemaServiceUrl =
+  process.env.CINEMA_SERVICE_URL || "http://localhost:3002";
+const bookingServiceUrl =
+  process.env.BOOKING_SERVICE_URL || "http://localhost:3003";
 const userServiceUrl = process.env.USER_SERVICE_URL || "http://localhost:3004";
 
 app.use(cors());
-app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /**
@@ -76,6 +78,7 @@ const proxy = (target) =>
   createProxyMiddleware({
     target,
     changeOrigin: true,
+    pathRewrite: (path, req) => req.originalUrl,
     on: {
       error: (err, req, res) => {
         console.error(`[Gateway] Proxy error -> ${target}:`, err.message);

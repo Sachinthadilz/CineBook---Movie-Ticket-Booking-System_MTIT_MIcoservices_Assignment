@@ -1,16 +1,25 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 
+const isValidationError = (error) => error.name === "ValidationError";
+
+const sendServerError = (res, error) =>
+  res.status(500).json({ error: "Server error", details: error.message });
+
 const registerUser = async (req, res) => {
   try {
     const { name, email, password, phone, role } = req.body;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ error: "name, email, and password are required" });
+      return res
+        .status(400)
+        .json({ error: "name, email, and password are required" });
     }
 
     if (role && role !== "user") {
-      return res.status(400).json({ error: "Public registration cannot assign admin privileges." });
+      return res
+        .status(400)
+        .json({ error: "Public registration cannot assign admin privileges." });
     }
 
     const existingUser = await User.findOne({ email });
@@ -28,15 +37,17 @@ const registerUser = async (req, res) => {
 
     const userObject = user.toObject();
     delete userObject.password;
-    const token = user.getSignedToken();
 
-    res.status(201).json({ message: "User registered successfully", token, user: userObject });
+    res.status(201).json({
+      message: "User registered successfully",
+      user: userObject,
+    });
   } catch (error) {
-    if (error.name === "ValidationError") {
+    if (isValidationError(error)) {
       return res.status(400).json({ error: error.message });
     }
 
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 
@@ -62,9 +73,11 @@ const loginUser = async (req, res) => {
     delete userObject.password;
     const token = user.getSignedToken();
 
-    res.status(200).json({ message: "Login successful", token, user: userObject });
+    res
+      .status(200)
+      .json({ message: "Login successful", token, user: userObject });
   } catch (error) {
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 
@@ -74,7 +87,7 @@ const getAllUsers = async (req, res) => {
 
     res.status(200).json({ count: users.length, users });
   } catch (error) {
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 
@@ -87,7 +100,9 @@ const getUserById = async (req, res) => {
     }
 
     if (req.user.id !== id && req.user.role !== "admin") {
-      return res.status(403).json({ error: "You are not allowed to access this user profile." });
+      return res
+        .status(403)
+        .json({ error: "You are not allowed to access this user profile." });
     }
 
     const user = await User.findById(id).select("-password");
@@ -97,7 +112,7 @@ const getUserById = async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 
@@ -111,7 +126,9 @@ const updateUserProfile = async (req, res) => {
     }
 
     if (req.user.id !== id && req.user.role !== "admin") {
-      return res.status(403).json({ error: "You are not allowed to update this user profile." });
+      return res
+        .status(403)
+        .json({ error: "You are not allowed to update this user profile." });
     }
 
     const user = await User.findById(id);
@@ -133,7 +150,9 @@ const updateUserProfile = async (req, res) => {
 
     if (role !== undefined) {
       if (req.user.role !== "admin") {
-        return res.status(403).json({ error: "Only admin users can update roles." });
+        return res
+          .status(403)
+          .json({ error: "Only admin users can update roles." });
       }
       user.role = role;
     }
@@ -142,14 +161,22 @@ const updateUserProfile = async (req, res) => {
     const userObject = updatedUser.toObject();
     delete userObject.password;
 
-    res.status(200).json({ message: "User profile updated successfully", user: userObject });
+    res
+      .status(200)
+      .json({ message: "User profile updated successfully", user: userObject });
   } catch (error) {
-    if (error.name === "ValidationError") {
+    if (isValidationError(error)) {
       return res.status(400).json({ error: error.message });
     }
 
-    res.status(500).json({ error: "Server error", details: error.message });
+    sendServerError(res, error);
   }
 };
 
-module.exports = { registerUser, loginUser, getAllUsers, getUserById, updateUserProfile };
+module.exports = {
+  registerUser,
+  loginUser,
+  getAllUsers,
+  getUserById,
+  updateUserProfile,
+};
