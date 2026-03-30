@@ -2,9 +2,19 @@ const mongoose = require("mongoose");
 const User = require("../models/User");
 
 const isValidationError = (error) => error.name === "ValidationError";
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 const sendServerError = (res, error) =>
   res.status(500).json({ error: "Server error", details: error.message });
+
+const sendInvalidUserId = (res) =>
+  res.status(400).json({ error: "Invalid user ID format" });
+
+const sanitizeUser = (userDoc) => {
+  const userObject = userDoc.toObject();
+  delete userObject.password;
+  return userObject;
+};
 
 const registerUser = async (req, res) => {
   try {
@@ -35,8 +45,7 @@ const registerUser = async (req, res) => {
       role: "user",
     });
 
-    const userObject = user.toObject();
-    delete userObject.password;
+    const userObject = sanitizeUser(user);
 
     res.status(201).json({
       message: "User registered successfully",
@@ -69,8 +78,7 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
-    const userObject = user.toObject();
-    delete userObject.password;
+    const userObject = sanitizeUser(user);
     const token = user.getSignedToken();
 
     res
@@ -116,8 +124,8 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid user ID format" });
+    if (!isValidObjectId(id)) {
+      return sendInvalidUserId(res);
     }
 
     if (req.user.id !== id && req.user.role !== "admin") {
@@ -142,8 +150,8 @@ const updateUserProfile = async (req, res) => {
     const { id } = req.params;
     const { name, email, phone, password, role } = req.body;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid user ID format" });
+    if (!isValidObjectId(id)) {
+      return sendInvalidUserId(res);
     }
 
     if (req.user.id !== id && req.user.role !== "admin") {
@@ -179,8 +187,7 @@ const updateUserProfile = async (req, res) => {
     }
 
     const updatedUser = await user.save();
-    const userObject = updatedUser.toObject();
-    delete userObject.password;
+    const userObject = sanitizeUser(updatedUser);
 
     res
       .status(200)

@@ -138,7 +138,7 @@ router.get("/:id", getMovieById);
  * /movies/{id}:
  *   delete:
  *     summary: Delete a movie
- *     description: Permanently deletes a movie from the database. Admin access only. Requires Authorization: Bearer <token>.
+ *     description: Permanently deletes a movie from the database. Admin access only. Requires a bearer token in the Authorization header.
  *     tags:
  *       - Movies
  *     security:

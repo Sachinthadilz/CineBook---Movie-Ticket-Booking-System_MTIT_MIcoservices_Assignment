@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 const Movie = require("../models/Movie");
 
 const isValidationError = (error) => error.name === "ValidationError";
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 const sendServerError = (res, error) =>
   res.status(500).json({ error: "Server error", details: error.message });
+
+const sendInvalidMovieId = (res) =>
+  res.status(400).json({ error: "Invalid movie ID format" });
 
 const createMovie = async (req, res) => {
   try {
@@ -57,8 +61,8 @@ const getMovieById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid movie ID format" });
+    if (!isValidObjectId(id)) {
+      return sendInvalidMovieId(res);
     }
 
     const movie = await Movie.findById(id);
@@ -76,8 +80,8 @@ const deleteMovie = async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid movie ID format" });
+    if (!isValidObjectId(id)) {
+      return sendInvalidMovieId(res);
     }
 
     const movie = await Movie.findByIdAndDelete(id);

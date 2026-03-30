@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 const Booking = require("../models/Booking");
 
 const isValidationError = (error) => error.name === "ValidationError";
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 const sendServerError = (res, error) =>
   res.status(500).json({ error: "Server error", details: error.message });
+
+const sendInvalidBookingId = (res) =>
+  res.status(400).json({ error: "Invalid booking ID format" });
 
 const createBooking = async (req, res) => {
   try {
@@ -66,8 +70,8 @@ const cancelBooking = async (req, res) => {
   try {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "Invalid booking ID format" });
+    if (!isValidObjectId(id)) {
+      return sendInvalidBookingId(res);
     }
 
     const booking = await Booking.findById(id);

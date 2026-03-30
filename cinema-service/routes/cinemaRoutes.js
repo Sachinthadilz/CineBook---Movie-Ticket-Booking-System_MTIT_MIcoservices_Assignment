@@ -86,7 +86,7 @@ router.get("/", getAllCinemas);
  * /cinemas/{id}:
  *   delete:
  *     summary: Delete a cinema
- *     description: Permanently deletes a cinema from the database. Admin access only. Requires Authorization: Bearer <token>.
+ *     description: Permanently deletes a cinema from the database. Admin access only. Requires a bearer token in the Authorization header.
  *     tags:
  *       - Cinemas
  *     security:
