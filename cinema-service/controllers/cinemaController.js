@@ -52,13 +52,10 @@ const deleteCinema = async (req, res) => {
       return res.status(400).json({ error: "Invalid cinema ID format" });
     }
 
-    const cinema = await Cinema.findById(id);
-    if (!cinema || !cinema.isActive) {
+    const cinema = await Cinema.findByIdAndDelete(id);
+    if (!cinema) {
       return res.status(404).json({ error: "Cinema not found" });
     }
-
-    cinema.isActive = false;
-    await cinema.save();
 
     res.status(200).json({ message: "Cinema deleted successfully", cinema });
   } catch (error) {

@@ -86,7 +86,7 @@ router.get("/", getAllCinemas);
  * /cinemas/{id}:
  *   delete:
  *     summary: Delete a cinema
- *     description: Soft deletes a cinema by setting isActive to false. Admin access only.
+ *     description: Permanently deletes a cinema from the database. Admin access only.
  *     tags:
  *       - Cinemas
  *     security:
