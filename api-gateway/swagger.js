@@ -364,7 +364,7 @@ const options = {
           properties: {
             message: {
               type: "string",
-              example: "Booking cancelled successfully",
+              example: "Booking deleted successfully",
             },
             booking: { $ref: "#/components/schemas/Booking" },
           },

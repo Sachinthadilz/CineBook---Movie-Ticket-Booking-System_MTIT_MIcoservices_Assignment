@@ -272,7 +272,8 @@
           }
         },
         {
-          "name": "Cancel My Booking",
+          "name": "Delete My Booking",
+          "description": "Permanently deletes the booking record via gateway.",
           "request": {
             "method": "DELETE",
             "header": [

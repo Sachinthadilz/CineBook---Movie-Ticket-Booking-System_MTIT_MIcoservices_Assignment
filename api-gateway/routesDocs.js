@@ -417,8 +417,8 @@
  *
  * /bookings/{id}:
  *   delete:
- *     summary: Cancel booking via gateway
- *     description: Proxies booking cancellation to the booking service.
+ *     summary: Delete booking via gateway
+ *     description: Proxies permanent booking deletion to the booking service.
  *     tags:
  *       - Bookings via Gateway
  *     security:
@@ -432,13 +432,13 @@
  *           type: string
  *     responses:
  *       200:
- *         description: Success. Booking cancelled successfully.
+ *         description: Success. Booking deleted successfully.
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/BookingCancelResponse'
  *       400:
- *         description: Invalid booking ID format or booking already cancelled.
+ *         description: Invalid booking ID format.
  *         content:
  *           application/json:
  *             schema:
@@ -462,7 +462,7 @@
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  *       403:
- *         description: Authenticated user is not allowed to cancel this booking.
+ *         description: Authenticated user is not allowed to delete this booking.
  *         content:
  *           application/json:
  *             schema:

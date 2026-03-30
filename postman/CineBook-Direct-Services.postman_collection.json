@@ -452,7 +452,8 @@
           }
         },
         {
-          "name": "Cancel My Booking",
+          "name": "Delete My Booking",
+          "description": "Permanently deletes the booking record.",
           "request": {
             "method": "DELETE",
             "header": [

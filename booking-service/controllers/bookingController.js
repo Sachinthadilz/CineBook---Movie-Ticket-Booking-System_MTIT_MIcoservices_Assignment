@@ -79,22 +79,15 @@ const cancelBooking = async (req, res) => {
       return res.status(404).json({ error: "Booking not found" });
     }
 
-    if (booking.status === "CANCELLED") {
-      return res.status(400).json({ error: "Booking is already cancelled" });
-    }
-
     if (booking.userId !== req.user.id && req.user.role !== "admin") {
       return res
         .status(403)
-        .json({ error: "You are not allowed to cancel this booking." });
+        .json({ error: "You are not allowed to delete this booking." });
     }
 
-    booking.status = "CANCELLED";
-    await booking.save();
+    await Booking.findByIdAndDelete(id);
 
-    res
-      .status(200)
-      .json({ message: "Booking cancelled successfully", booking });
+    res.status(200).json({ message: "Booking deleted successfully", booking });
   } catch (error) {
     sendServerError(res, error);
   }

@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { createBooking, getAllBookings, cancelBooking } = require("../controllers/bookingController");
+const {
+  createBooking,
+  getAllBookings,
+  cancelBooking,
+} = require("../controllers/bookingController");
 const { protect } = require("../middleware/authMiddleware");
 
 /**
@@ -89,8 +93,8 @@ router.get("/", protect, getAllBookings);
  * @swagger
  * /bookings/{id}:
  *   delete:
- *     summary: Cancel a booking
- *     description: Marks an existing booking as cancelled using its MongoDB identifier.
+ *     summary: Delete a booking
+ *     description: Permanently deletes an existing booking using its MongoDB identifier.
  *     tags:
  *       - Bookings
  *     security:
@@ -104,13 +108,13 @@ router.get("/", protect, getAllBookings);
  *           type: string
  *     responses:
  *       200:
- *         description: Success. Booking cancelled successfully.
+ *         description: Success. Booking deleted successfully.
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/BookingCancelResponse'
  *       400:
- *         description: Invalid booking ID or booking already cancelled.
+ *         description: Invalid booking ID format.
  *         content:
  *           application/json:
  *             schema:
@@ -134,7 +138,7 @@ router.get("/", protect, getAllBookings);
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  *       403:
- *         description: Authenticated user is not allowed to cancel this booking.
+ *         description: Authenticated user is not allowed to delete this booking.
  *         content:
  *           application/json:
  *             schema:
