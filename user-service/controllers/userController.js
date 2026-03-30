@@ -83,9 +83,30 @@ const loginUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password").sort({ createdAt: -1 });
+    if (req.user.role !== "admin") {
+      return res.status(403).json({
+        error: "You don't have admin privileges.",
+      });
+    }
+
+    const users = await User.find({ _id: { $ne: req.user.id } })
+      .select("-password")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({ count: users.length, users });
+  } catch (error) {
+    sendServerError(res, error);
+  }
+};
+
+const getOwnProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
   } catch (error) {
     sendServerError(res, error);
   }
@@ -173,10 +194,24 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const updateOwnProfile = async (req, res) => {
+  if (req.body && req.body.role !== undefined) {
+    return res.status(400).json({
+      error:
+        "Role updates are not allowed through /users/me. Use admin endpoint /users/:id.",
+    });
+  }
+
+  req.params.id = req.user.id;
+  return updateUserProfile(req, res);
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getAllUsers,
+  getOwnProfile,
   getUserById,
+  updateOwnProfile,
   updateUserProfile,
 };

@@ -76,11 +76,26 @@ const options = {
             role: { type: "string", enum: ["user", "admin"], example: "admin" },
           },
         },
+        UpdateOwnProfileRequest: {
+          type: "object",
+          properties: {
+            name: { type: "string", example: "Nadeesha Perera" },
+            email: { type: "string", example: "nadeesha.perera@example.com" },
+            phone: { type: "string", example: "0772345678" },
+            password: { type: "string", example: "NewSecurePass123" },
+          },
+        },
         UserResponse: {
           type: "object",
           properties: {
-            message: { type: "string", example: "User registered successfully" },
-            token: { type: "string", example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." },
+            message: {
+              type: "string",
+              example: "User registered successfully",
+            },
+            token: {
+              type: "string",
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            },
             user: { $ref: "#/components/schemas/User" },
           },
         },
@@ -88,14 +103,20 @@ const options = {
           type: "object",
           properties: {
             message: { type: "string", example: "Login successful" },
-            token: { type: "string", example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." },
+            token: {
+              type: "string",
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            },
             user: { $ref: "#/components/schemas/User" },
           },
         },
         UserUpdateResponse: {
           type: "object",
           properties: {
-            message: { type: "string", example: "User profile updated successfully" },
+            message: {
+              type: "string",
+              example: "User profile updated successfully",
+            },
             user: { $ref: "#/components/schemas/User" },
           },
         },

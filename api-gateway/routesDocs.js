@@ -480,7 +480,7 @@
  * /users:
  *   get:
  *     summary: Get all users via gateway
- *     description: Proxies user listing to the user service. Admin access only.
+ *     description: Proxies user listing to the user service. Admin access only. Non-admin users receive no user details.
  *     tags:
  *       - Users via Gateway
  *     security:
@@ -499,7 +499,91 @@
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  *       403:
- *         description: Authenticated user is not allowed to view all users.
+ *         description: You don't have admin privileges.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *
+ * /users/me:
+ *   get:
+ *     summary: Get authenticated user profile via gateway
+ *     description: Proxies own-profile retrieval to the user service using the authenticated JWT subject.
+ *     tags:
+ *       - Users via Gateway
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Success. Authenticated user profile retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *   put:
+ *     summary: Update authenticated user profile via gateway
+ *     description: Proxies own-profile updates to the user service using the authenticated JWT subject. Role updates are not allowed through this endpoint.
+ *     tags:
+ *       - Users via Gateway
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateOwnProfileRequest'
+ *     responses:
+ *       200:
+ *         description: Success. User profile updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserUpdateResponse'
+ *       400:
+ *         description: Invalid update payload, including attempts to update role.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: Authenticated user is not allowed to update this profile field.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: User not found.
  *         content:
  *           application/json:
  *             schema:

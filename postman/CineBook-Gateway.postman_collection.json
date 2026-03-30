@@ -183,14 +183,15 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/users/{{userId}}",
+              "raw": "{{baseUrl}}/users/me",
               "host": ["{{baseUrl}}"],
-              "path": ["users", "{{userId}}"]
+              "path": ["users", "me"]
             }
           }
         },
         {
           "name": "Update Own Profile",
+          "description": "Updates the authenticated user's own profile. Do not include role in this payload.",
           "request": {
             "method": "PUT",
             "header": [
@@ -208,9 +209,9 @@
               "raw": "{\n  \"name\": \"Nadeesha Perera\",\n  \"phone\": \"0719988776\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{userId}}",
+              "raw": "{{baseUrl}}/users/me",
               "host": ["{{baseUrl}}"],
-              "path": ["users", "{{userId}}"]
+              "path": ["users", "me"]
             }
           }
         },
@@ -294,6 +295,7 @@
       "item": [
         {
           "name": "Get All Users",
+          "description": "Admin only endpoint. If called with a non-admin token, it returns 403 with: You don't have admin privileges.",
           "request": {
             "method": "GET",
             "header": [

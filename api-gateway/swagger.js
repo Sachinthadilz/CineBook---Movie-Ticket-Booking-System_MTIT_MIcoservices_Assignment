@@ -413,6 +413,15 @@ const options = {
             role: { type: "string", enum: ["user", "admin"], example: "admin" },
           },
         },
+        UpdateOwnProfileRequest: {
+          type: "object",
+          properties: {
+            name: { type: "string", example: "Nadeesha Perera" },
+            email: { type: "string", example: "nadeesha.perera@example.com" },
+            phone: { type: "string", example: "0772345678" },
+            password: { type: "string", example: "NewSecurePass123" },
+          },
+        },
         UserResponse: {
           type: "object",
           properties: {

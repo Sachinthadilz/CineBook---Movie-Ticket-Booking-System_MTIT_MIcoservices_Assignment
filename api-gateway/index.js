@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
 const swaggerUi = require("swagger-ui-express");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const swaggerSpec = require("./swagger");
@@ -17,6 +18,8 @@ const bookingServiceUrl =
 const userServiceUrl = process.env.USER_SERVICE_URL || "http://localhost:3004";
 
 app.use(cors());
+app.use(morgan("dev"));
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 /**
@@ -61,6 +64,8 @@ app.get("/", (req, res) => {
       { method: "POST", path: "/users/register", target: userServiceUrl },
       { method: "POST", path: "/users/login", target: userServiceUrl },
       { method: "GET", path: "/users", target: userServiceUrl },
+      { method: "GET", path: "/users/me", target: userServiceUrl },
+      { method: "PUT", path: "/users/me", target: userServiceUrl },
       { method: "GET", path: "/users/:id", target: userServiceUrl },
       { method: "PUT", path: "/users/:id", target: userServiceUrl },
     ],
