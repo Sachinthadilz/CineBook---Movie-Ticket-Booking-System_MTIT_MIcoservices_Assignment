@@ -4,11 +4,12 @@ const getJwtSecret = () =>
   process.env.JWT_SECRET || "cinebook_dev_secret_change_me";
 
 const getBearerToken = (authHeader) => {
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!authHeader || typeof authHeader !== "string") {
     return null;
   }
 
-  return authHeader.split(" ")[1];
+  const match = authHeader.trim().match(/^Bearer\s+(.+)$/i);
+  return match ? match[1].trim() : null;
 };
 
 const protect = (req, res, next) => {

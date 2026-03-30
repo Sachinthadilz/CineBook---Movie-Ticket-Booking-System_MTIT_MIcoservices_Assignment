@@ -249,6 +249,7 @@
         },
         {
           "name": "Delete Movie",
+          "description": "Admin-only endpoint. Send Authorization: Bearer {{adminToken}}.",
           "request": {
             "method": "DELETE",
             "header": [
@@ -322,6 +323,7 @@
         },
         {
           "name": "Delete Cinema",
+          "description": "Admin-only endpoint. Send Authorization: Bearer {{adminToken}}.",
           "request": {
             "method": "DELETE",
             "header": [

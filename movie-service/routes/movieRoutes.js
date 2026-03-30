@@ -138,9 +138,11 @@ router.get("/:id", getMovieById);
  * /movies/{id}:
  *   delete:
  *     summary: Delete a movie
- *     description: Deletes a movie permanently using its MongoDB identifier.
+ *     description: Permanently deletes a movie from the database. Admin access only. Requires Authorization: Bearer <token>.
  *     tags:
  *       - Movies
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

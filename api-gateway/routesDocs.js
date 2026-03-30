@@ -98,12 +98,6 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
- *       500:
- *         description: Unexpected gateway or downstream service error.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
  *       401:
  *         description: Authentication required or token is invalid.
  *         content:
@@ -116,11 +110,19 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *   delete:
  *     summary: Delete movie via gateway
- *     description: Proxies movie deletion to the movie service.
+ *     description: Proxies permanent movie deletion to the movie service. Admin access only.
  *     tags:
  *       - Movies via Gateway
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
