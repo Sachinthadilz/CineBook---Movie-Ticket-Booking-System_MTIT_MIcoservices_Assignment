@@ -402,6 +402,23 @@
           }
         },
         {
+          "name": "Delete Cinema",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cinemas/{{cinemaId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["cinemas", "{{cinemaId}}"]
+            }
+          }
+        },
+        {
           "name": "Create Showtime",
           "event": [
             {

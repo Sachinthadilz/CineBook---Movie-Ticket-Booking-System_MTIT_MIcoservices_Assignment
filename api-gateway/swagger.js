@@ -222,6 +222,13 @@ const options = {
             cinema: { $ref: "#/components/schemas/Cinema" },
           },
         },
+        CinemaDeleteResponse: {
+          type: "object",
+          properties: {
+            message: { type: "string", example: "Cinema deleted successfully" },
+            cinema: { $ref: "#/components/schemas/Cinema" },
+          },
+        },
         Showtime: {
           type: "object",
           properties: {

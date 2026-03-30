@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Cinema = require("../models/Cinema");
 
 const isValidationError = (error) => error.name === "ValidationError";
@@ -43,4 +44,26 @@ const getAllCinemas = async (req, res) => {
   }
 };
 
-module.exports = { createCinema, getAllCinemas };
+const deleteCinema = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid cinema ID format" });
+    }
+
+    const cinema = await Cinema.findById(id);
+    if (!cinema || !cinema.isActive) {
+      return res.status(404).json({ error: "Cinema not found" });
+    }
+
+    cinema.isActive = false;
+    await cinema.save();
+
+    res.status(200).json({ message: "Cinema deleted successfully", cinema });
+  } catch (error) {
+    sendServerError(res, error);
+  }
+};
+
+module.exports = { createCinema, getAllCinemas, deleteCinema };

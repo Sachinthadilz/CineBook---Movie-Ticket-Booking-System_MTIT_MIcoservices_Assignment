@@ -218,6 +218,59 @@
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  *
+ * /cinemas/{id}:
+ *   delete:
+ *     summary: Delete cinema via gateway
+ *     description: Proxies cinema deletion to the cinema service. Admin access only.
+ *     tags:
+ *       - Cinemas via Gateway
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: MongoDB ID of the cinema.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success. Cinema deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CinemaDeleteResponse'
+ *       400:
+ *         description: Invalid cinema ID format.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: Authenticated user is not allowed to delete cinemas.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Cinema not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *
  * /shows:
  *   post:
  *     summary: Create a showtime via gateway

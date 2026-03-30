@@ -56,6 +56,7 @@ app.get("/", (req, res) => {
       { method: "DELETE", path: "/movies/:id", target: movieServiceUrl },
       { method: "POST", path: "/cinemas", target: cinemaServiceUrl },
       { method: "GET", path: "/cinemas", target: cinemaServiceUrl },
+      { method: "DELETE", path: "/cinemas/:id", target: cinemaServiceUrl },
       { method: "POST", path: "/shows", target: cinemaServiceUrl },
       { method: "GET", path: "/shows", target: cinemaServiceUrl },
       { method: "POST", path: "/bookings", target: bookingServiceUrl },

@@ -8,7 +8,8 @@ const options = {
     info: {
       title: "CineBook Cinema Service API",
       version: "1.0.0",
-      description: "API documentation for the CineBook cinema and showtime service.",
+      description:
+        "API documentation for the CineBook cinema and showtime service.",
     },
     servers: [
       {
@@ -30,7 +31,11 @@ const options = {
           properties: {
             hallName: { type: "string", example: "Hall 1" },
             totalSeats: { type: "number", example: 120 },
-            seatType: { type: "string", enum: ["Standard", "VIP", "Recliner"], example: "VIP" },
+            seatType: {
+              type: "string",
+              enum: ["Standard", "VIP", "Recliner"],
+              example: "VIP",
+            },
           },
         },
         Cinema: {
@@ -86,6 +91,13 @@ const options = {
             cinema: { $ref: "#/components/schemas/Cinema" },
           },
         },
+        CinemaDeleteResponse: {
+          type: "object",
+          properties: {
+            message: { type: "string", example: "Cinema deleted successfully" },
+            cinema: { $ref: "#/components/schemas/Cinema" },
+          },
+        },
         Showtime: {
           type: "object",
           properties: {
@@ -98,8 +110,14 @@ const options = {
                 {
                   type: "object",
                   properties: {
-                    _id: { type: "string", example: "660123abc123def456789012" },
-                    cinemaName: { type: "string", example: "Majestic Cineplex" },
+                    _id: {
+                      type: "string",
+                      example: "660123abc123def456789012",
+                    },
+                    cinemaName: {
+                      type: "string",
+                      example: "Majestic Cineplex",
+                    },
                     location: { type: "string", example: "Colombo 03" },
                   },
                 },
@@ -116,7 +134,15 @@ const options = {
         },
         CreateShowtimeRequest: {
           type: "object",
-          required: ["movieId", "cinemaId", "hallName", "showDate", "showTime", "ticketPrice", "availableSeats"],
+          required: [
+            "movieId",
+            "cinemaId",
+            "hallName",
+            "showDate",
+            "showTime",
+            "ticketPrice",
+            "availableSeats",
+          ],
           properties: {
             movieId: { type: "string", example: "660123abc123def456789011" },
             movieTitle: { type: "string", example: "Inception" },
@@ -141,7 +167,10 @@ const options = {
         ShowtimeCreateResponse: {
           type: "object",
           properties: {
-            message: { type: "string", example: "Showtime created successfully" },
+            message: {
+              type: "string",
+              example: "Showtime created successfully",
+            },
             show: { $ref: "#/components/schemas/Showtime" },
           },
         },
