@@ -8,6 +8,7 @@ const {
   getUserById,
   updateOwnProfile,
   updateUserProfile,
+  deleteOwnAccount,
 } = require("../controllers/userController");
 const { protect } = require("../middleware/authMiddleware");
 
@@ -214,6 +215,56 @@ router.get("/me", protect, getOwnProfile);
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.put("/me", protect, updateOwnProfile);
+
+/**
+ * @swagger
+ * /users/me:
+ *   delete:
+ *     summary: Delete own account permanently
+ *     description: Permanently deletes the authenticated user's account. Requires password confirmation for security.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/DeleteAccountRequest'
+ *     responses:
+ *       200:
+ *         description: Success. Account deleted permanently.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DeleteAccountResponse'
+ *       400:
+ *         description: Invalid password or missing password field.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+router.delete("/me", protect, deleteOwnAccount);
 
 /**
  * @swagger

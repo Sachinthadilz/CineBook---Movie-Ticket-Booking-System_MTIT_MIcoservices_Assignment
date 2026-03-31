@@ -5,6 +5,7 @@ const {
   getAllMovies,
   getMovieById,
   deleteMovie,
+  updateMovie,
 } = require("../controllers/movieController");
 const { protect, authorizeRoles } = require("../middleware/authMiddleware");
 
@@ -189,5 +190,68 @@ router.get("/:id", getMovieById);
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.delete("/:id", protect, authorizeRoles("admin"), deleteMovie);
+
+/**
+ * @swagger
+ * /movies/{id}:
+ *   put:
+ *     summary: Update a movie
+ *     description: Updates an existing movie record. Admin access only. Requires a bearer token in the Authorization header.
+ *     tags:
+ *       - Movies
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: MongoDB ID of the movie to update.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateMovieRequest'
+ *     responses:
+ *       200:
+ *         description: Success. Movie updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/MovieUpdateResponse'
+ *       400:
+ *         description: Invalid movie ID format or validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Movie not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: Authenticated user is not allowed to update movies.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+router.put("/:id", protect, authorizeRoles("admin"), updateMovie);
 
 module.exports = router;

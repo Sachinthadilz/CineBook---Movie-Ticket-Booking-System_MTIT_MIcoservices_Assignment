@@ -93,4 +93,76 @@ const cancelBooking = async (req, res) => {
   }
 };
 
-module.exports = { createBooking, getAllBookings, cancelBooking };
+const updateBooking = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { seats, totalAmount, status } = req.body;
+
+    if (!isValidObjectId(id)) {
+      return sendInvalidBookingId(res);
+    }
+
+    const booking = await Booking.findById(id);
+    if (!booking) {
+      return res.status(404).json({ error: "Booking not found" });
+    }
+
+    if (booking.userId !== req.user.id && req.user.role !== "admin") {
+      return res
+        .status(403)
+        .json({ error: "You are not allowed to update this booking." });
+    }
+
+    if (booking.status === "CANCELLED") {
+      return res
+        .status(400)
+        .json({ error: "Cannot update a cancelled booking." });
+    }
+
+    if (seats !== undefined) {
+      if (!Array.isArray(seats) || seats.length === 0) {
+        return res
+          .status(400)
+          .json({ error: "seats must be a non-empty array" });
+      }
+      booking.seats = seats;
+    }
+
+    if (totalAmount !== undefined) {
+      if (typeof totalAmount !== "number" || totalAmount < 0) {
+        return res
+          .status(400)
+          .json({ error: "totalAmount must be a non-negative number" });
+      }
+      booking.totalAmount = totalAmount;
+    }
+
+    if (status !== undefined) {
+      if (!["CONFIRMED", "CANCELLED"].includes(status)) {
+        return res
+          .status(400)
+          .json({ error: "status must be CONFIRMED or CANCELLED" });
+      }
+      booking.status = status;
+    }
+
+    const updatedBooking = await booking.save();
+
+    res.status(200).json({
+      message: "Booking updated successfully",
+      booking: updatedBooking,
+    });
+  } catch (error) {
+    if (isValidationError(error)) {
+      return res.status(400).json({ error: error.message });
+    }
+    sendServerError(res, error);
+  }
+};
+
+module.exports = {
+  createBooking,
+  getAllBookings,
+  cancelBooking,
+  updateBooking,
+};

@@ -120,6 +120,30 @@ const options = {
             user: { $ref: "#/components/schemas/User" },
           },
         },
+        DeleteAccountRequest: {
+          type: "object",
+          required: ["password"],
+          properties: {
+            password: {
+              type: "string",
+              example: "secret123",
+              description: "Current password to confirm account deletion",
+            },
+          },
+        },
+        DeleteAccountResponse: {
+          type: "object",
+          properties: {
+            message: {
+              type: "string",
+              example: "Account deleted permanently",
+            },
+            deletedUserId: {
+              type: "string",
+              example: "660123abc123def456789078",
+            },
+          },
+        },
         ErrorResponse: {
           type: "object",
           properties: {

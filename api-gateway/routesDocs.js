@@ -155,6 +155,63 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
+ *   put:
+ *     summary: Update movie via gateway
+ *     description: Proxies movie updates to the movie service. Admin access only.
+ *     tags:
+ *       - Movies via Gateway
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: MongoDB ID of the movie.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateMovieRequest'
+ *     responses:
+ *       200:
+ *         description: Success. Movie updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/MovieUpdateResponse'
+ *       400:
+ *         description: Invalid movie ID format or validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Movie not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: Authenticated user is not allowed to update movies.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *
  * /cinemas:
  *   post:
@@ -272,6 +329,63 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
+ *   put:
+ *     summary: Update cinema via gateway
+ *     description: Proxies cinema updates to the cinema service. Admin access only.
+ *     tags:
+ *       - Cinemas via Gateway
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: MongoDB ID of the cinema.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateCinemaRequest'
+ *     responses:
+ *       200:
+ *         description: Success. Cinema updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CinemaUpdateResponse'
+ *       400:
+ *         description: Invalid cinema ID format or validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Cinema not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: Authenticated user is not allowed to update cinemas.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *
  * /shows:
  *   post:
@@ -336,6 +450,65 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ShowtimeListResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *
+ * /shows/{id}:
+ *   put:
+ *     summary: Update showtime via gateway
+ *     description: Proxies showtime updates to the cinema service. Admin access only.
+ *     tags:
+ *       - Showtimes via Gateway
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: MongoDB ID of the showtime.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateShowtimeRequest'
+ *     responses:
+ *       200:
+ *         description: Success. Showtime updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ShowtimeUpdateResponse'
+ *       400:
+ *         description: Invalid showtime ID format or validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Showtime or related cinema not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: Authenticated user is not allowed to update showtimes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
  *         description: Unexpected gateway or downstream service error.
  *         content:
@@ -463,6 +636,63 @@
  *               $ref: '#/components/schemas/ErrorResponse'
  *       403:
  *         description: Authenticated user is not allowed to delete this booking.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *   put:
+ *     summary: Update booking via gateway
+ *     description: Proxies booking updates to the booking service. Only booking owner or admin can update.
+ *     tags:
+ *       - Bookings via Gateway
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: MongoDB ID of the booking.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateBookingRequest'
+ *     responses:
+ *       200:
+ *         description: Success. Booking updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BookingUpdateResponse'
+ *       400:
+ *         description: Invalid booking ID format, invalid payload, or attempting to update a cancelled booking.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Booking not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: Authenticated user is not allowed to update this booking.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
  *         content:
  *           application/json:
  *             schema:
@@ -633,6 +863,50 @@
  *               $ref: '#/components/schemas/ErrorResponse'
  *       403:
  *         description: Authenticated user is not allowed to update this profile field.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected gateway or downstream service error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *   delete:
+ *     summary: Delete own account via gateway
+ *     description: Proxies permanent account deletion to the user service. Requires password confirmation for security.
+ *     tags:
+ *       - Users via Gateway
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/DeleteAccountRequest'
+ *     responses:
+ *       200:
+ *         description: Success. Account deleted permanently.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DeleteAccountResponse'
+ *       400:
+ *         description: Invalid password or missing password field.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
  *         content:
  *           application/json:
  *             schema:

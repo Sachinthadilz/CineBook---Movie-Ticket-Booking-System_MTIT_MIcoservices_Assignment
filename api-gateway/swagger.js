@@ -157,6 +157,30 @@ const options = {
             movie: { $ref: "#/components/schemas/Movie" },
           },
         },
+        UpdateMovieRequest: {
+          type: "object",
+          properties: {
+            title: { type: "string", example: "Gehenu Lamai Updated" },
+            genre: { type: "string", example: "Drama" },
+            duration: { type: "number", example: 120 },
+            description: { type: "string", example: "Updated description." },
+            language: { type: "string", example: "Sinhala" },
+            rating: { type: "string", example: "PG-13" },
+            releaseDate: {
+              type: "string",
+              format: "date-time",
+              example: "2026-06-01T00:00:00.000Z",
+            },
+            isActive: { type: "boolean", example: true },
+          },
+        },
+        MovieUpdateResponse: {
+          type: "object",
+          properties: {
+            message: { type: "string", example: "Movie updated successfully" },
+            movie: { $ref: "#/components/schemas/Movie" },
+          },
+        },
         Hall: {
           type: "object",
           properties: {
@@ -226,6 +250,25 @@ const options = {
           type: "object",
           properties: {
             message: { type: "string", example: "Cinema deleted successfully" },
+            cinema: { $ref: "#/components/schemas/Cinema" },
+          },
+        },
+        UpdateCinemaRequest: {
+          type: "object",
+          properties: {
+            cinemaName: { type: "string", example: "Liberty by Scope Updated" },
+            location: { type: "string", example: "Colombo 07" },
+            halls: {
+              type: "array",
+              items: { $ref: "#/components/schemas/Hall" },
+            },
+            isActive: { type: "boolean", example: true },
+          },
+        },
+        CinemaUpdateResponse: {
+          type: "object",
+          properties: {
+            message: { type: "string", example: "Cinema updated successfully" },
             cinema: { $ref: "#/components/schemas/Cinema" },
           },
         },
@@ -302,6 +345,29 @@ const options = {
             show: { $ref: "#/components/schemas/Showtime" },
           },
         },
+        UpdateShowtimeRequest: {
+          type: "object",
+          properties: {
+            movieId: { type: "string", example: "660123abc123def456789012" },
+            movieTitle: { type: "string", example: "Gehenu Lamai Updated" },
+            cinemaId: { type: "string", example: "660123abc123def456789111" },
+            hallName: { type: "string", example: "Hall 2" },
+            showDate: { type: "string", example: "2026-05-15" },
+            showTime: { type: "string", example: "20:00" },
+            ticketPrice: { type: "number", example: 2000 },
+            availableSeats: { type: "number", example: 100 },
+          },
+        },
+        ShowtimeUpdateResponse: {
+          type: "object",
+          properties: {
+            message: {
+              type: "string",
+              example: "Showtime updated successfully",
+            },
+            show: { $ref: "#/components/schemas/Showtime" },
+          },
+        },
         Booking: {
           type: "object",
           properties: {
@@ -365,6 +431,37 @@ const options = {
             message: {
               type: "string",
               example: "Booking deleted successfully",
+            },
+            booking: { $ref: "#/components/schemas/Booking" },
+          },
+        },
+        UpdateBookingRequest: {
+          type: "object",
+          properties: {
+            seats: {
+              type: "array",
+              items: { type: "string", example: "A1" },
+              description: "Updated seat selection",
+            },
+            totalAmount: {
+              type: "number",
+              example: 5000,
+              description: "Updated total amount",
+            },
+            status: {
+              type: "string",
+              enum: ["CONFIRMED", "CANCELLED"],
+              example: "CONFIRMED",
+              description: "Updated booking status",
+            },
+          },
+        },
+        BookingUpdateResponse: {
+          type: "object",
+          properties: {
+            message: {
+              type: "string",
+              example: "Booking updated successfully",
             },
             booking: { $ref: "#/components/schemas/Booking" },
           },
@@ -462,6 +559,30 @@ const options = {
               example: "User profile updated successfully",
             },
             user: { $ref: "#/components/schemas/User" },
+          },
+        },
+        DeleteAccountRequest: {
+          type: "object",
+          required: ["password"],
+          properties: {
+            password: {
+              type: "string",
+              example: "SecurePass123",
+              description: "Current password to confirm account deletion",
+            },
+          },
+        },
+        DeleteAccountResponse: {
+          type: "object",
+          properties: {
+            message: {
+              type: "string",
+              example: "Account deleted permanently",
+            },
+            deletedUserId: {
+              type: "string",
+              example: "660123abc123def456789444",
+            },
           },
         },
         ErrorResponse: {

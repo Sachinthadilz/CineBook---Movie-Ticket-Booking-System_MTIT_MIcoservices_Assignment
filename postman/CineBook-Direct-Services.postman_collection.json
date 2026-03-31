@@ -178,6 +178,32 @@
               "path": ["users", "me"]
             }
           }
+        },
+        {
+          "name": "Delete Own Account",
+          "description": "Permanently deletes the authenticated user's account. Requires password confirmation.",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"{{userPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{userServiceUrl}}/users/me",
+              "host": ["{{userServiceUrl}}"],
+              "path": ["users", "me"]
+            }
+          }
         }
       ]
     },
@@ -240,6 +266,32 @@
           "request": {
             "method": "GET",
             "header": [],
+            "url": {
+              "raw": "{{movieServiceUrl}}/movies/{{movieId}}",
+              "host": ["{{movieServiceUrl}}"],
+              "path": ["movies", "{{movieId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Movie",
+          "description": "Admin-only endpoint to update movie details.",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Gehenu Lamai - Restored Edition\",\n  \"duration\": 115,\n  \"description\": \"A digitally restored Sri Lankan classic drama.\"\n}"
+            },
             "url": {
               "raw": "{{movieServiceUrl}}/movies/{{movieId}}",
               "host": ["{{movieServiceUrl}}"],
@@ -340,6 +392,32 @@
           }
         },
         {
+          "name": "Update Cinema",
+          "description": "Admin-only endpoint to update cinema details.",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cinemaName\": \"Liberty by Scope - Premium\",\n  \"location\": \"Colombo 03, Kollupitiya\"\n}"
+            },
+            "url": {
+              "raw": "{{cinemaServiceUrl}}/cinemas/{{cinemaId}}",
+              "host": ["{{cinemaServiceUrl}}"],
+              "path": ["cinemas", "{{cinemaId}}"]
+            }
+          }
+        },
+        {
           "name": "Create Showtime",
           "event": [
             {
@@ -387,6 +465,32 @@
               "raw": "{{cinemaServiceUrl}}/shows",
               "host": ["{{cinemaServiceUrl}}"],
               "path": ["shows"]
+            }
+          }
+        },
+        {
+          "name": "Update Showtime",
+          "description": "Admin-only endpoint to update showtime details.",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"showTime\": \"20:00\",\n  \"ticketPrice\": 2000,\n  \"availableSeats\": 100\n}"
+            },
+            "url": {
+              "raw": "{{cinemaServiceUrl}}/shows/{{showId}}",
+              "host": ["{{cinemaServiceUrl}}"],
+              "path": ["shows", "{{showId}}"]
             }
           }
         }
@@ -462,6 +566,32 @@
                 "value": "Bearer {{userToken}}"
               }
             ],
+            "url": {
+              "raw": "{{bookingServiceUrl}}/bookings/{{bookingId}}",
+              "host": ["{{bookingServiceUrl}}"],
+              "path": ["bookings", "{{bookingId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update My Booking",
+          "description": "Updates the booking seats or status. Only booking owner or admin can update.",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"seats\": [\"C1\", \"C2\", \"C3\"],\n  \"totalAmount\": 5400\n}"
+            },
             "url": {
               "raw": "{{bookingServiceUrl}}/bookings/{{bookingId}}",
               "host": ["{{bookingServiceUrl}}"],

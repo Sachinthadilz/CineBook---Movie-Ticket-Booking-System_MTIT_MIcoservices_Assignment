@@ -213,6 +213,37 @@ const updateOwnProfile = async (req, res) => {
   return updateUserProfile(req, res);
 };
 
+const deleteOwnAccount = async (req, res) => {
+  try {
+    const { password } = req.body;
+
+    if (!password) {
+      return res.status(400).json({
+        error: "Password is required to confirm account deletion",
+      });
+    }
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid password" });
+    }
+
+    await User.findByIdAndDelete(req.user.id);
+
+    res.status(200).json({
+      message: "Account deleted permanently",
+      deletedUserId: req.user.id,
+    });
+  } catch (error) {
+    sendServerError(res, error);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -221,4 +252,5 @@ module.exports = {
   getUserById,
   updateOwnProfile,
   updateUserProfile,
+  deleteOwnAccount,
 };

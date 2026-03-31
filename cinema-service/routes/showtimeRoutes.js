@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { createShow, getAllShows } = require("../controllers/showtimeController");
+const {
+  createShow,
+  getAllShows,
+  updateShow,
+} = require("../controllers/showtimeController");
 const { protect, authorizeRoles } = require("../middleware/authMiddleware");
 
 /**
@@ -82,5 +86,68 @@ router.post("/", protect, authorizeRoles("admin"), createShow);
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.get("/", getAllShows);
+
+/**
+ * @swagger
+ * /shows/{id}:
+ *   put:
+ *     summary: Update a showtime
+ *     description: Updates an existing showtime record. Admin access only. Requires a bearer token in the Authorization header.
+ *     tags:
+ *       - Showtimes
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: MongoDB ID of the showtime to update.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateShowtimeRequest'
+ *     responses:
+ *       200:
+ *         description: Success. Showtime updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ShowtimeUpdateResponse'
+ *       400:
+ *         description: Invalid showtime ID format or validation error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       404:
+ *         description: Showtime or related cinema not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Unexpected server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Authentication required or token is invalid.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       403:
+ *         description: Authenticated user is not allowed to update showtimes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+router.put("/:id", protect, authorizeRoles("admin"), updateShow);
 
 module.exports = router;

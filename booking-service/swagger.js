@@ -93,6 +93,38 @@ const options = {
             booking: { $ref: "#/components/schemas/Booking" },
           },
         },
+        UpdateBookingRequest: {
+          type: "object",
+          properties: {
+            seats: {
+              type: "array",
+              items: { type: "string", example: "A1" },
+              minItems: 1,
+              description: "Updated seat selection",
+            },
+            totalAmount: {
+              type: "number",
+              example: 6000,
+              description: "Updated total amount",
+            },
+            status: {
+              type: "string",
+              enum: ["CONFIRMED", "CANCELLED"],
+              example: "CONFIRMED",
+              description: "Updated booking status",
+            },
+          },
+        },
+        BookingUpdateResponse: {
+          type: "object",
+          properties: {
+            message: {
+              type: "string",
+              example: "Booking updated successfully",
+            },
+            booking: { $ref: "#/components/schemas/Booking" },
+          },
+        },
         ErrorResponse: {
           type: "object",
           properties: {

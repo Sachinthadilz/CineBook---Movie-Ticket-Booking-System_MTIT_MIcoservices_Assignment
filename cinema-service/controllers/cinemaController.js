@@ -67,4 +67,42 @@ const deleteCinema = async (req, res) => {
   }
 };
 
-module.exports = { createCinema, getAllCinemas, deleteCinema };
+const updateCinema = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { cinemaName, location, halls, isActive } = req.body;
+
+    if (!isValidObjectId(id)) {
+      return sendInvalidCinemaId(res);
+    }
+
+    const cinema = await Cinema.findById(id);
+    if (!cinema) {
+      return res.status(404).json({ error: "Cinema not found" });
+    }
+
+    if (cinemaName !== undefined) cinema.cinemaName = cinemaName;
+    if (location !== undefined) cinema.location = location;
+    if (halls !== undefined) {
+      if (!Array.isArray(halls)) {
+        return res.status(400).json({ error: "halls must be an array" });
+      }
+      cinema.halls = halls;
+    }
+    if (isActive !== undefined) cinema.isActive = isActive;
+
+    const updatedCinema = await cinema.save();
+
+    res.status(200).json({
+      message: "Cinema updated successfully",
+      cinema: updatedCinema,
+    });
+  } catch (error) {
+    if (isValidationError(error)) {
+      return res.status(400).json({ error: error.message });
+    }
+    sendServerError(res, error);
+  }
+};
+
+module.exports = { createCinema, getAllCinemas, deleteCinema, updateCinema };

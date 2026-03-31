@@ -98,6 +98,28 @@ const options = {
             cinema: { $ref: "#/components/schemas/Cinema" },
           },
         },
+        UpdateCinemaRequest: {
+          type: "object",
+          properties: {
+            cinemaName: {
+              type: "string",
+              example: "Majestic Cineplex Updated",
+            },
+            location: { type: "string", example: "Colombo 07" },
+            halls: {
+              type: "array",
+              items: { $ref: "#/components/schemas/Hall" },
+            },
+            isActive: { type: "boolean", example: true },
+          },
+        },
+        CinemaUpdateResponse: {
+          type: "object",
+          properties: {
+            message: { type: "string", example: "Cinema updated successfully" },
+            cinema: { $ref: "#/components/schemas/Cinema" },
+          },
+        },
         Showtime: {
           type: "object",
           properties: {
@@ -170,6 +192,29 @@ const options = {
             message: {
               type: "string",
               example: "Showtime created successfully",
+            },
+            show: { $ref: "#/components/schemas/Showtime" },
+          },
+        },
+        UpdateShowtimeRequest: {
+          type: "object",
+          properties: {
+            movieId: { type: "string", example: "660123abc123def456789011" },
+            movieTitle: { type: "string", example: "Inception 2" },
+            cinemaId: { type: "string", example: "660123abc123def456789012" },
+            hallName: { type: "string", example: "Hall 2" },
+            showDate: { type: "string", example: "2026-04-10" },
+            showTime: { type: "string", example: "20:00" },
+            ticketPrice: { type: "number", example: 3000 },
+            availableSeats: { type: "number", example: 100 },
+          },
+        },
+        ShowtimeUpdateResponse: {
+          type: "object",
+          properties: {
+            message: {
+              type: "string",
+              example: "Showtime updated successfully",
             },
             show: { $ref: "#/components/schemas/Showtime" },
           },

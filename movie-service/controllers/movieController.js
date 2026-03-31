@@ -95,4 +95,56 @@ const deleteMovie = async (req, res) => {
   }
 };
 
-module.exports = { createMovie, getAllMovies, getMovieById, deleteMovie };
+const updateMovie = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      genre,
+      duration,
+      description,
+      language,
+      rating,
+      releaseDate,
+      isActive,
+    } = req.body;
+
+    if (!isValidObjectId(id)) {
+      return sendInvalidMovieId(res);
+    }
+
+    const movie = await Movie.findById(id);
+    if (!movie) {
+      return res.status(404).json({ error: "Movie not found" });
+    }
+
+    if (title !== undefined) movie.title = title;
+    if (genre !== undefined) movie.genre = genre;
+    if (duration !== undefined) movie.duration = duration;
+    if (description !== undefined) movie.description = description;
+    if (language !== undefined) movie.language = language;
+    if (rating !== undefined) movie.rating = rating;
+    if (releaseDate !== undefined) movie.releaseDate = releaseDate;
+    if (isActive !== undefined) movie.isActive = isActive;
+
+    const updatedMovie = await movie.save();
+
+    res.status(200).json({
+      message: "Movie updated successfully",
+      movie: updatedMovie,
+    });
+  } catch (error) {
+    if (isValidationError(error)) {
+      return res.status(400).json({ error: error.message });
+    }
+    sendServerError(res, error);
+  }
+};
+
+module.exports = {
+  createMovie,
+  getAllMovies,
+  getMovieById,
+  deleteMovie,
+  updateMovie,
+};
